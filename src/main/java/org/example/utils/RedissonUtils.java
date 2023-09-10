@@ -18,17 +18,14 @@ public class RedissonUtils {
     private final RedisTemplate<String, Object> redisTemplate;
     private final RedissonClient redissonClient;
 
-    private static final String TEST_LOCK_1 = "TEST_LOCK_1";
-    private static final String TEST_LOCK_2 = "TEST_LOCK_2";
-
     public RedissonUtils(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
         this.redisTemplate = redisTemplate;
         this.redissonClient = redissonClient;
     }
 
-    public void test1(Integer guidanceTimeId) {
+    public void test1(String key) {
         // 获取 Redisson 的分布式锁
-        RLock lock = redissonClient.getLock(TEST_LOCK_1);
+        RLock lock = redissonClient.getLock(key);
         try {
             // 尝试获取锁
             lock.lock();
@@ -44,9 +41,9 @@ public class RedissonUtils {
         }
     }
 
-    public void test2(Integer guidanceTimeId) {
+    public void test2(String key) {
         // 获取 Redisson 的分布式锁
-        RLock lock = redissonClient.getLock(TEST_LOCK_2);
+        RLock lock = redissonClient.getLock(key);
         try {
             // 尝试获取锁
             lock.lock();
